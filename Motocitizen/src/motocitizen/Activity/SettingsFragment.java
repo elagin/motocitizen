@@ -25,6 +25,7 @@ public class SettingsFragment extends PreferenceFragment {
     Preference hoursAgo;
     Preference maxNotifications;
     Preference useVibration;
+    Preference defaultRegion;
 
     private ListPreference mapProviderPreference;
     private final Preference.OnPreferenceChangeListener mapProviderListener = new Preference.OnPreferenceChangeListener() {
@@ -123,6 +124,17 @@ public class SettingsFragment extends PreferenceFragment {
         showBreak.setOnPreferenceChangeListener(visibleListener);
         showSteal.setOnPreferenceChangeListener(visibleListener);
         showOther.setOnPreferenceChangeListener(visibleListener);
+
+
+        Preference defaultRegion = findPreference(getResources().getString(R.string.pref_default_region_button_title));
+        defaultRegion.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference arg0) {
+                getActivity().startActivity(new Intent(getActivity(), SelectRegionActivity.class));
+                return true;
+            }
+        });
+        defaultRegion.setSummary(String.valueOf(Preferences.getDefaultRegion()));
 
         hoursAgo = findPreference(Preferences.hoursAgo);
         hoursAgo.setSummary(String.valueOf(Preferences.getHoursAgo()));

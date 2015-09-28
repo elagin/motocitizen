@@ -44,6 +44,8 @@ public class Preferences {
     public final static  String userId;
     public final static  String userName;
     public final static  String userRole;
+    public final static  String DEFAULT_REGION;
+
     private final static String onWay;
     private final static String soundTitle;
     private final static String soundURI;
@@ -88,6 +90,7 @@ public class Preferences {
         savedLng = "savedlng";
         savedLat = "savedlat";
         notificationList = "notificationList";
+        DEFAULT_REGION = "default.region";
 
         mapProviders = new String[]{"google", "osm", "yandex"};
     }
@@ -324,5 +327,13 @@ public class Preferences {
 
     public static void setUserRole(String role) {
         preferences.edit().putString(userRole, role).commit();
+    }
+
+    public static void setDefaultRegion(String value) {
+        preferences.edit().putString(DEFAULT_REGION, value).commit();
+    }
+
+    public static String getDefaultRegion() {
+        return preferences.getString(DEFAULT_REGION, "77");
     }
 }

@@ -136,4 +136,7 @@
 	<string name="mc_settings_no_use_vibration">Не использовать вибрацию</string>
     <string name="title_activity_business_card">BusinessCardActivity</string>
 	<string name="bussines_card">Визитка</string>
+	<string name="pref_default_region_button_title">Регион</string>
+    <string name="title_activity_select_region">SelectRegionActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>

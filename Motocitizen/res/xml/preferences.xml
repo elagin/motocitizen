@@ -113,5 +113,10 @@
             android:summary="@string/mc_notif_system"
             android:tag="mc.notification.sound.title"
             android:title="@string/mc_settings_auth_button"/>
+        <Preference
+            android:id="@+id/pref_default_region"
+            android:key="@string/pref_default_region_button_title"
+            android:summary=""
+            android:title="@string/pref_default_region_button_title"/>
     </PreferenceCategory>
 </PreferenceScreen>
