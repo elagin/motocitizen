@@ -11,6 +11,7 @@ public enum Methods {
     MESSAGE("message"),
     CREATE("createAcc"),
     REGISTER_GCM("registerGCM"),
+    REGIONS("regions"),
     CHANGE_STATE("changeState");
 
     private final String code;

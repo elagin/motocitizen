@@ -6,10 +6,16 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import motocitizen.app.general.user.Auth;
+import motocitizen.content.Region;
 import motocitizen.startup.Preferences;
 
 public class MyApp extends Application {
@@ -17,9 +23,11 @@ public class MyApp extends Application {
     private static MyApp instance;
     private Auth     auth     = null;
     private Geocoder geocoder = null;
+    private List<Region> regions;
 
     public MyApp() {
         instance = this;
+        regions = new ArrayList<>();
     }
 
     public static Context getAppContext() {
@@ -68,5 +76,36 @@ public class MyApp extends Application {
             e.printStackTrace();
         }
         return res.toString();
+    }
+
+    public List<Region> getRegions() {
+        return regions;
+    }
+
+    public void setRegions(JSONObject json) {
+        regions.clear();
+        try {
+            JSONArray items = json.getJSONArray("result");
+            for(int i = 0; i < items.length(); i++) {
+                JSONObject item = items.getJSONObject(i);
+                Region region = new Region();
+                region.id = item.getString("id");
+                region.name = item.getString("region");
+                region.lat = item.getDouble("lat");
+                region.lon = item.getDouble("lon");
+                regions.add(region);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Region getRegion(String id) {
+        for(int i = 0; i < regions.size(); i++) {
+            Region region = regions.get(i);
+            if(region.id.equals(id))
+                return region;
+        }
+        return null;
     }
 }

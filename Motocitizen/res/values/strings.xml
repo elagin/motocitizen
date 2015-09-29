@@ -139,4 +139,6 @@
 	<string name="pref_default_region_button_title">Регион</string>
     <string name="title_activity_select_region">SelectRegionActivity</string>
     <string name="action_settings">Settings</string>
+	<string name="action_regions_update">Обновить список</string>
+	<string name="region_not_selected">Регион не выбран</string>
 </resources>

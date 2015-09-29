@@ -7,7 +7,9 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.widget.Toast;
 
+import motocitizen.MyApp;
 import motocitizen.content.Content;
+import motocitizen.content.Region;
 import motocitizen.main.R;
 import motocitizen.startup.Preferences;
 import motocitizen.startup.Startup;
@@ -25,7 +27,6 @@ public class SettingsFragment extends PreferenceFragment {
     Preference hoursAgo;
     Preference maxNotifications;
     Preference useVibration;
-    Preference defaultRegion;
 
     private ListPreference mapProviderPreference;
     private final Preference.OnPreferenceChangeListener mapProviderListener = new Preference.OnPreferenceChangeListener() {
@@ -134,7 +135,12 @@ public class SettingsFragment extends PreferenceFragment {
                 return true;
             }
         });
-        defaultRegion.setSummary(String.valueOf(Preferences.getDefaultRegion()));
+
+        Region region = ((MyApp) getActivity().getApplicationContext()).getRegion(Preferences.getDefaultRegion());
+        if(region != null)
+            defaultRegion.setSummary(region.getTitle());
+        else
+            defaultRegion.setSummary(R.string.region_not_selected);
 
         hoursAgo = findPreference(Preferences.hoursAgo);
         hoursAgo.setSummary(String.valueOf(Preferences.getHoursAgo()));
