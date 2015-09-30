@@ -16,6 +16,7 @@ import java.util.List;
 
 import motocitizen.app.general.user.Auth;
 import motocitizen.content.Region;
+import motocitizen.database.Regions;
 import motocitizen.startup.Preferences;
 
 public class MyApp extends Application {
@@ -95,6 +96,7 @@ public class MyApp extends Application {
                 region.lon = item.getDouble("lon");
                 regions.add(region);
             }
+            Regions.setRegions(getAppContext(), regions);
         } catch (JSONException e) {
             e.printStackTrace();
         }

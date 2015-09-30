@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import motocitizen.Activity.AboutActivity;
 import motocitizen.Activity.CreateAccActivity;
 import motocitizen.Activity.SettingsActivity;
+import motocitizen.MyApp;
 import motocitizen.content.Content;
 import motocitizen.gcm.GCMBroadcastReceiver;
 import motocitizen.gcm.NewAccidentReceived;
@@ -39,6 +40,7 @@ import motocitizen.maps.MyMapManager;
 import motocitizen.maps.google.MyGoogleMapManager;
 import motocitizen.maps.osm.MyOSMMapManager;
 import motocitizen.network.requests.AsyncTaskCompleteListener;
+import motocitizen.network.requests.RegionsRequest;
 import motocitizen.utils.Const;
 
 public class Startup extends ActionBarActivity implements View.OnClickListener {
@@ -144,6 +146,8 @@ public class Startup extends ActionBarActivity implements View.OnClickListener {
 
         createMap(MyMapManager.GOOGLE);
         new GCMBroadcastReceiver();
+        if(((MyApp) getApplicationContext()).getRegions().isEmpty())
+            new RegionsRequest(new RegionsCallback(), this);
     }
 
     private void checkUpdate() {
@@ -340,5 +344,14 @@ public class Startup extends ActionBarActivity implements View.OnClickListener {
         if (mMenu == null) return;
         MenuItem refreshItem = mMenu.findItem(R.id.action_refresh);
         refreshItem.setVisible(true);
+    }
+
+    private class RegionsCallback implements AsyncTaskCompleteListener {
+        @Override
+        public void onTaskComplete(JSONObject result) {
+            if (!result.has("error")) {
+                ((MyApp) getApplicationContext()).setRegions(result);
+            }
+        }
     }
 }
