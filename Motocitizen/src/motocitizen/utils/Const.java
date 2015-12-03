@@ -16,6 +16,9 @@ public class Const {
     public final static int              EQUATOR          = 20038;
     public final static String           PHONE            = "78007751734";
 
+    // Defines a custom Intent action
+    public static final String BROADCAST_ACTION = "motocitizen.BROADCAST";
+
     @SuppressWarnings("deprecation")
     public static int getWidth() {
         if (Build.VERSION.SDK_INT < 13) {

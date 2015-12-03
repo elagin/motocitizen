@@ -11,17 +11,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import motocitizen.MyApp;
 import motocitizen.accident.Accident;
 import motocitizen.database.Favorites;
 import motocitizen.network.AsyncTaskCompleteListener;
-import motocitizen.network.requests.AccidentsRequest;
 import motocitizen.utils.SortedHashMap;
 
 public class Content extends SortedHashMap<Accident> {
@@ -47,9 +43,9 @@ public class Content extends SortedHashMap<Accident> {
         inPlace = id;
     }
 
-    public void requestUpdate(AsyncTaskCompleteListener listener) {
-        new AccidentsRequest(listener, true);
-    }
+//    public void requestUpdate(Context context) {
+//        MyIntentService.startActionGetAccidents(context, true);
+//    }
 
     private FrameLayout noAccidentsNotification() {
         FrameLayout fl = new FrameLayout(MyApp.getCurrentActivity());
@@ -63,9 +59,9 @@ public class Content extends SortedHashMap<Accident> {
         return fl;
     }
 
-    public void requestUpdate() {
-        new AccidentsRequest(new AccidentsRequestCallback(), true);
-    }
+//    public void requestUpdate() {
+//        new AccidentsRequest(new AccidentsRequestCallback(), true);
+//    }
 
     public void parseJSON(JSONObject json) {
         if (!json.has("list")) return;

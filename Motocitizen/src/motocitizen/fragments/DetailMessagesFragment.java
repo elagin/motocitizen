@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import motocitizen.Activity.AccidentDetailsActivity;
 import motocitizen.MyApp;
+import motocitizen.MyIntentService;
 import motocitizen.accident.Accident;
 import motocitizen.accident.Message;
 import motocitizen.app.general.popups.MessagesPopup;
@@ -66,7 +67,7 @@ public class DetailMessagesFragment extends AccidentDetailsFragments {
         return viewMain;
     }
 
-    private void update() {
+    public void update() {
         messagesTable.removeAllViews();
         final Accident accident  = ((AccidentDetailsActivity) getActivity()).getCurrentPoint();
         int            lastOwner = 1;
@@ -87,6 +88,7 @@ public class DetailMessagesFragment extends AccidentDetailsFragments {
             messagesTable.addView(row);
         }
         setupAccess();
+        mcNewMessageText.setText("");
     }
 
     private void updateUnreadMessages(int accidentId, int messageId) {
@@ -112,7 +114,7 @@ public class DetailMessagesFragment extends AccidentDetailsFragments {
                     e.printStackTrace();
                 }
             } else {
-                MyApp.getContent().requestUpdate(new UpdateAccidentsCallback());
+                MyIntentService.startActionGetAccidents(getActivity(), true);
             }
             newMessageButton.setEnabled(true);
         }
@@ -122,7 +124,7 @@ public class DetailMessagesFragment extends AccidentDetailsFragments {
         @Override
         public void onTaskComplete(JSONObject result) {
             mcNewMessageText.setText("");
-            if (!result.has("error")) MyApp.getContent().parseJSON(result);
+            //if (!result.has("error")) MyApp.getContent().parseJSON(result);
             ((AccidentDetailsActivity) getActivity()).update();
             update();
         }

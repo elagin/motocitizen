@@ -18,10 +18,10 @@ import org.json.JSONObject;
 
 import motocitizen.Activity.AccidentDetailsActivity;
 import motocitizen.MyApp;
+import motocitizen.MyIntentService;
 import motocitizen.draw.VolunteerListAdapter;
 import motocitizen.main.R;
 import motocitizen.network.AsyncTaskCompleteListener;
-import motocitizen.network.requests.AccidentsRequest;
 import motocitizen.network.requests.CancelOnWayRequest;
 import motocitizen.network.requests.OnWayRequest;
 import motocitizen.utils.Preferences;
@@ -168,19 +168,20 @@ public class DetailVolunteersFragment extends AccidentDetailsFragments {
                     message("Неизвестная ошибка " + result.toString());
                 }
             } else {
-                new AccidentsRequest(new UpdateAccidentsCallback());
+                MyIntentService.startActionGetAccidents(getActivity(), true);
             }
         }
     }
 
-    private class UpdateAccidentsCallback implements AsyncTaskCompleteListener {
-        @Override
-        public void onTaskComplete(JSONObject result) {
-            MyApp.getContent().requestUpdate();
-            ((AccidentDetailsActivity) getActivity()).update();
-            update();
-        }
-    }
+//    private class UpdateAccidentsCallback implements AsyncTaskCompleteListener {
+//        @Override
+//        public void onTaskComplete(JSONObject result) {
+//            MyApp.getContent().requestUpdate(getActivity());
+//            //MyIntentService.startActionGetAccidents(getActivity(), true);
+//            ((AccidentDetailsActivity) getActivity()).update();
+//            update();
+//        }
+//    }
 
     private void sendCancelOnway() {
         Preferences.setOnWay(0);

@@ -13,20 +13,18 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import org.json.JSONObject;
-
 import motocitizen.Activity.AboutActivity;
 import motocitizen.Activity.CreateAccActivity;
 import motocitizen.Activity.MyFragment;
 import motocitizen.Activity.SettingsActivity;
 import motocitizen.MyApp;
+import motocitizen.MyIntentService;
 import motocitizen.content.Content;
 import motocitizen.draw.AccidentRow;
 import motocitizen.gcm.NewAccidentReceived;
 import motocitizen.main.R;
 import motocitizen.maps.MyMapManager;
 import motocitizen.maps.google.MyGoogleMapManager;
-import motocitizen.network.AsyncTaskCompleteListener;
 import motocitizen.utils.BounceScrollView;
 import motocitizen.utils.Const;
 import motocitizen.utils.OverScrollListenerInterface;
@@ -147,7 +145,7 @@ public class MainScreenFragment extends MyFragment {
     private void getAccidents() {
         if (MyApp.isOnline()) {
             startRefreshAnimation();
-            MyApp.getContent().requestUpdate(new AccidentsRequestCallback());
+            MyIntentService.startActionGetAccidents(getActivity(), true);
         } else {
             Toast.makeText(getActivity(), getString(R.string.inet_not_available), Toast.LENGTH_LONG).show();
         }
@@ -168,15 +166,15 @@ public class MainScreenFragment extends MyFragment {
         setRefreshAnimation(true);
     }
 
-    private class AccidentsRequestCallback implements AsyncTaskCompleteListener {
-
-        public void onTaskComplete(JSONObject result) {
-            if (!result.has("error")) MyApp.getContent().parseJSON(result);
-            if (!isVisible()) return;
-            stopRefreshAnimation();
-            redraw();
-        }
-    }
+//    private class AccidentsRequestCallback implements AsyncTaskCompleteListener {
+//
+//        public void onTaskComplete(JSONObject result) {
+//            if (!result.has("error")) MyApp.getContent().parseJSON(result);
+//            if (!isVisible()) return;
+//            stopRefreshAnimation();
+//            redraw();
+//        }
+//    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -225,7 +223,7 @@ public class MainScreenFragment extends MyFragment {
             if (inTransaction) return;
             if (MyApp.isOnline()) {
                 startRefreshAnimation();
-                MyApp.getContent().requestUpdate(new AccidentsRequestCallback());
+                MyIntentService.startActionGetAccidents(getActivity(), true);
             } else {
                 Toast.makeText(getActivity(), getActivity().getString(R.string.inet_not_available), Toast.LENGTH_LONG).show();
             }

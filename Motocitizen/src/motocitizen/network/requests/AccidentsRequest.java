@@ -2,24 +2,19 @@ package motocitizen.network.requests;
 
 import android.location.Location;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.HashMap;
 
 import motocitizen.MyApp;
-import motocitizen.network.AsyncTaskCompleteListener;
-import motocitizen.network.HTTPClient;
+import motocitizen.network.HTTPClientNew;
 import motocitizen.network.Methods;
 import motocitizen.utils.Preferences;
 
-public class AccidentsRequest extends HTTPClient {
+public class AccidentsRequest extends HTTPClientNew {
     private boolean silent;
 
     @SuppressWarnings("unchecked")
-    public AccidentsRequest(AsyncTaskCompleteListener listener, boolean silent) {
+    public AccidentsRequest(boolean silent) {
         this.silent = silent;
-        this.listener = listener;
         post = new HashMap<>();
         Location location = MyApp.getLocationManager().getLocation();
         String   user     = Preferences.getLogin();
@@ -31,13 +26,13 @@ public class AccidentsRequest extends HTTPClient {
         post.put("lon", String.valueOf(location.getLongitude()));
         post.put("age", String.valueOf(Preferences.getHoursAgo()));
         post.put("m", Methods.GET_LIST.toCode());
-        execute(post);
+//        execute(post);
     }
 
-    public AccidentsRequest(AsyncTaskCompleteListener listener) {
-        new AccidentsRequest(listener, false);
-    }
-
+//    public AccidentsRequest(AsyncTaskCompleteListener listener) {
+//        new AccidentsRequest(listener, false);
+//    }
+/*
     @Override
     public boolean error(JSONObject response) {
         if (silent) return false;
@@ -69,4 +64,5 @@ public class AccidentsRequest extends HTTPClient {
         }
         return "Неизвестная ошибка " + response.toString();
     }
+*/
 }
