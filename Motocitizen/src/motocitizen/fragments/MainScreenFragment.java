@@ -167,7 +167,6 @@ public class MainScreenFragment extends MyFragment {
     }
 
 //    private class AccidentsRequestCallback implements AsyncTaskCompleteListener {
-//
 //        public void onTaskComplete(JSONObject result) {
 //            if (!result.has("error")) MyApp.getContent().parseJSON(result);
 //            if (!isVisible()) return;

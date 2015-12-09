@@ -53,26 +53,27 @@ public class RequestErrors {
     }
 
     public static boolean isError(String action, JSONObject response) {
-        String res;
+        Boolean isError = true;
         switch (action) {
             case MyIntentService.ACTION_ACCIDENTS:
-                if (!response.has("list"))
-                    res = "Ошибка соединения " + response.toString();
-                try {
-                    JSONObject json = response.getJSONArray("list").getJSONObject(0);
-                    if (json.has("error")) {
-                        String error = json.getString("error");
-                        if (error.equals("no_new")) {
-                            res =  "Нет новых сообщений";
+                if (response.has("list")) {
+                    try {
+                        JSONObject json = response.getJSONArray("list").getJSONObject(0);
+                        if (!json.has("error")) {
+//                            String error = json.getString("error");
+//                            if (error.equals("no_new")) {
+//                                res = "Нет новых сообщений";
+//                            }
+                            isError = false;
+                        } else {
+//                            res = "Список обновлен";
                         }
-                    } else {
-                        res =  "Список обновлен";
+                      } catch (JSONException ignored) {
                     }
-                } catch (JSONException ignored) {
                 }
                 break;
         }
-        return !response.has(RequestErrors.VALID_RESULT);
+        return isError;
     }
 
     public static boolean isVkError(JSONObject response) {

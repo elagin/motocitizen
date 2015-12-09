@@ -21,6 +21,7 @@ import motocitizen.utils.Const;
 public class MainScreenActivity extends ActionBarActivity {
 
     private static ActionBar actionBar;
+    private MainScreenFragment mainScreenFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,6 @@ public class MainScreenActivity extends ActionBarActivity {
         // Registers the ResponseStateReceiver and its intent filters
         LocalBroadcastManager.getInstance(this).registerReceiver(mDownloadStateReceiver, statusIntentFilter);
 
-
         setContentView(R.layout.main_screen_activity);
         MyApp.setCurrentActivity(this);
 
@@ -49,7 +49,8 @@ public class MainScreenActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         MyApp.setCurrentActivity(this);
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MainScreenFragment()).commit();
+        mainScreenFragment = new MainScreenFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mainScreenFragment).commit();
 
         MyApp.getLocationManager().wakeup();
         if (ChangeLog.isNewVersion()) {
@@ -103,10 +104,10 @@ public class MainScreenActivity extends ActionBarActivity {
             if (resultCode == MyIntentService.RESULT_SUCCSESS) {
                 switch (intent.getStringExtra(MyIntentService.EXTENDED_OPERATION_TYPE)) {
                     case MyIntentService.ACTION_ACCIDENTS:
-//                        if (!isVisible())
-//                            return;
-//                        stopRefreshAnimation();
-//                        redraw();
+                        if (!mainScreenFragment.isVisible())
+                            return;
+                        mainScreenFragment.stopRefreshAnimation();
+                        mainScreenFragment.redraw();
                         break;
                     default:
                         break;

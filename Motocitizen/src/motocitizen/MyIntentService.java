@@ -68,6 +68,7 @@ public class MyIntentService extends IntentService {
                 } else {
                     MyApp.getContent().parseJSON(pointList);
                 }
+                mBroadcaster.broadcastIntentWithState(action, RESULT_SUCCSESS, "");
                 break;
             default:
                 mBroadcaster.broadcastIntentWithState(action, RESULT_SUCCSESS, "");

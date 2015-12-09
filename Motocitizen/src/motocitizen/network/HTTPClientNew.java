@@ -47,7 +47,7 @@ public class HTTPClientNew {
 
         URL url;
         try {
-            url = new URL(SERVER);
+            url = createUrl(false);
         } catch (MalformedURLException e) {
             e.printStackTrace();
             return new JSONObject();
@@ -146,5 +146,11 @@ public class HTTPClientNew {
                 e.printStackTrace();
             }
         return result.toString();
+    }
+
+    private URL createUrl(Boolean https) throws MalformedURLException {
+        String protocol;
+        protocol = https ? "https" : "http";
+        return new URL(protocol + "://" + SERVER);
     }
 }
