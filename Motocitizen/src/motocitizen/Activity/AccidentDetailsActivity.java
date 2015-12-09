@@ -78,13 +78,8 @@ public class AccidentDetailsActivity extends ActionBarActivity {
 
         // The filter's action is BROADCAST_ACTION
         IntentFilter statusIntentFilter = new IntentFilter(Const.BROADCAST_ACTION);
-
-        // Sets the filter's category to DEFAULT
-        statusIntentFilter.addCategory(Intent.CATEGORY_DEFAULT);
-
         // Instantiates a new ResponseStateReceiver
         ResponseStateReceiver mDownloadStateReceiver = new ResponseStateReceiver();
-
         // Registers the ResponseStateReceiver and its intent filters
         LocalBroadcastManager.getInstance(this).registerReceiver(mDownloadStateReceiver, statusIntentFilter);
 
@@ -361,6 +356,9 @@ public class AccidentDetailsActivity extends ActionBarActivity {
                     case MyIntentService.ACTION_ACCIDENTS:
                         update();
                         detailMessagesFragment.update();
+                        break;
+                    case MyIntentService.ACTION_ON_WAY:
+                        //Nothing to do
                         break;
                     default:
                         break;

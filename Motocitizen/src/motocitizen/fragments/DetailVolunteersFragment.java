@@ -23,7 +23,6 @@ import motocitizen.draw.VolunteerListAdapter;
 import motocitizen.main.R;
 import motocitizen.network.AsyncTaskCompleteListener;
 import motocitizen.network.requests.CancelOnWayRequest;
-import motocitizen.network.requests.OnWayRequest;
 import motocitizen.utils.Preferences;
 
 public class DetailVolunteersFragment extends AccidentDetailsFragments {
@@ -151,7 +150,8 @@ public class DetailVolunteersFragment extends AccidentDetailsFragments {
     private void sendOnway() {
         //AccidentsGeneral.setOnWay(accidentID);
         Preferences.setOnWay(accidentID);
-        new OnWayRequest(new OnWayCallback(), accidentID);
+        //new OnWayRequest(new OnWayCallback(), accidentID);
+        MyIntentService.startActionOnWay(getActivity(), accidentID);
     }
 
     private void message(String text) {

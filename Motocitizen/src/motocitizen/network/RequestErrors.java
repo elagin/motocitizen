@@ -72,6 +72,11 @@ public class RequestErrors {
                     }
                 }
                 break;
+            case MyIntentService.ACTION_ON_WAY:
+                if (!response.has("error")) {
+                    isError = false;
+                }
+                break;
         }
         return isError;
     }
