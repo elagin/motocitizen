@@ -16,10 +16,10 @@ object PreferencesMigration : MigrationInterface {
     }
 
     private fun migrate933to996() {
-        stringToInt("hours.ago")
-        stringToInt("mc.distance.show")
-        stringToInt("mc.distance.alarm")
-        stringToInt("notifications.max")
+        stringToInt("hours.ago", 6)
+        stringToInt("mc.distance.show", 100)
+        stringToInt("mc.distance.alarm", 50)
+        stringToInt("notifications.max", 3)
 
         if (preferences.getString("authType", "") != "") return
         preferences.edit().putString("authType", when {
@@ -30,9 +30,13 @@ object PreferencesMigration : MigrationInterface {
         }).apply()
     }
 
-    private fun stringToInt(name: String) = tryOrPrintStack {
-        val pref = preferences.getString(name, "").toInt()
-        preferences.edit().remove(name).apply()
+    private fun stringToInt(name: String, default: Int) = tryOrPrintStack {
+        var pref = default;
+        val value = preferences.getString(name, "")
+        if (!value.isEmpty()) {
+            pref = preferences.getString(name, "").toInt()
+            preferences.edit().remove(name).apply()
+        }
         preferences.edit().putInt(name, pref).apply()
     }
 }
